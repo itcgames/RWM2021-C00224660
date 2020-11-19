@@ -52,13 +52,28 @@ public class Grid
         return textMesh;
     }
 
+    //Get width
+    public int GetWorldWidth()
+    {
+        return this.width;
+    }
+    //Get height
+    public int GetWorldHeight()
+    {
+        return this.height;
+    }
+    //Get cell size
+    public float GetWorldCellSize()
+    {
+        return this.cellSize;
+    }
     // Get world pos of tile
-    private Vector3 GetWorldPosition(int x, int y)
+    public Vector3 GetWorldPosition(int x, int y)
     {
         return new Vector3(x, y) * cellSize + originPosition;
     }
 
-    private Vector2Int GetXY(Vector3 worldPosition)
+    public Vector2Int GetXY(Vector3 worldPosition)
     {
         return new Vector2Int(Mathf.FloorToInt((worldPosition.x - originPosition.x) / cellSize), Mathf.FloorToInt((worldPosition.y - originPosition.y) / cellSize));
     }
@@ -75,6 +90,10 @@ public class Grid
         SetValue(GetXY(worldPosition).x, GetXY(worldPosition).y, value);
     }
 
+    public int getValueAtPos(Vector3 worldPosition)
+    {
+        return gridArray[(int)(worldPosition.x), (int)(worldPosition.y)];
+    }
 
 
 
@@ -86,9 +105,12 @@ public class Grid
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            SetValue(Camera.main.ScreenToWorldPoint(Input.mousePosition), 2);
+        }
     }
 }
 
