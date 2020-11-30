@@ -8,7 +8,7 @@ namespace Tests
 {
     public class TestSuite
     {
-        private Grid grid;
+        private MyGrid<bool> grid;
         private int m_tileWidth;
         private int m_tileHeight;
         private float m_cellSize;
@@ -21,7 +21,7 @@ namespace Tests
             m_tileHeight = 9;
             m_cellSize = 1f;
             mapOriginPosition = new Vector3(0, 0, 0);  // set origin
-            grid = new Grid(m_tileWidth, m_tileHeight, m_cellSize, mapOriginPosition);
+            grid = new MyGrid<bool>(m_tileWidth, m_tileHeight, m_cellSize, mapOriginPosition);
         }
 
         [TearDown]
@@ -52,10 +52,9 @@ namespace Tests
             // Use the Assert class to test conditions.
             // Use yield to skip a frame.
             Vector3 indexOfTileToChange = new Vector3(5, 8);
-            int settingValue = 7;
-            grid.SetValue(indexOfTileToChange, settingValue);  // only way to simulate mouse click 
+            grid.SetValue(indexOfTileToChange, false);  // only way to simulate mouse click 
             yield return new WaitForSeconds(0.1f);
-            Assert.AreEqual(grid.getValueAtPos(indexOfTileToChange), settingValue);
+            Assert.AreEqual(grid.getValueAtPos(indexOfTileToChange), false);
         }
     }
 }

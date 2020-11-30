@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Author: Josh Browne
 public class Testing : MonoBehaviour
 {
-    private Grid grid;
+    private MyTileMap tileMap;
     private int tileWidth;
     private int tileHeight;
     private float cellSize;
@@ -17,14 +18,14 @@ public class Testing : MonoBehaviour
         tileHeight = 9;
         cellSize = 1f;
         mapOriginPosition = new Vector3(0, 0, 0);  // set origin
-        grid = new Grid(tileWidth, tileHeight, cellSize, mapOriginPosition);
-        Camera.main.transform.position = mapOriginPosition + new Vector3((tileWidth * cellSize) / 2, (tileHeight * cellSize) / 2, -10);
-        //Camera.main.transform.localScale.Set(2, 2,2);
+        float textureSelectPanelOffset = 1;
+        tileMap = new MyTileMap(tileWidth, tileHeight, cellSize, mapOriginPosition);
+        Camera.main.transform.position = mapOriginPosition + new Vector3((tileWidth * cellSize) / 2 + textureSelectPanelOffset, (tileHeight * cellSize) / 2, -10);
     }
 
     // Update is called once per frame
     void Update()
     {
-        grid.Update();
+        tileMap.Update();
     }
 }
