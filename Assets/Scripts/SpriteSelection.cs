@@ -1,50 +1,86 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 // Author: Josh Browne
 
 public class SpriteSelection
 {
+
+    public GameObject canvasGameObject;
+    public GameObject selectionPanelGameObject;  // main obj
+    public GameObject scrollArea;
+    public GameObject EventSystem;
+
     public GameObject[] spriteGameObjects;
     public Sprite[] spriteArray;
-    public Canvas parentPanel;
-    public GameObject selectionPanelGameObject;
+    public Image parentPanel;
+    
     private CanvasRenderer canvasRenderer;
     public GameObject imageContainer;
-    public GameObject scrollArea;
+
 
     //Constructor
     public SpriteSelection(float x, float y, float panelWidth, float panelHeight, float cellSize)
     {
-        // make game obj and sprite renderer
-        selectionPanelGameObject = new GameObject("SelectionPanelGameObject");
-        imageContainer = new GameObject("ImageContainer");
-        scrollArea = new GameObject("ScrollArea");
-        imageContainer.AddComponent<RectTransform>();
-        imageContainer.GetComponent<RectTransform>().rect.size.Set(1000, 1000);
-        
-        imageContainer.transform.parent = scrollArea.transform;
-        scrollArea.transform.parent = selectionPanelGameObject.transform;
-        scrollArea.AddComponent<Image>();
-        scrollArea.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f); // transparnt
-        scrollArea.AddComponent<ScrollRect>();
-        scrollArea.AddComponent<Mask>();
-        //scrollArea.AddComponent<ScrollRect>().content = imageContainer.GetComponent<RectTransform>();
+        // Top Obj - Canvas
+        canvasGameObject = new GameObject("Canvas Game Object");
+        canvasGameObject.AddComponent<RectTransform>();
+        canvasGameObject.GetComponent<RectTransform>().rect.size.Set(panelWidth, panelHeight);
+        //canvasGameObject.transform.position = new Vector2(x, y);
+        canvasGameObject.AddComponent<Canvas>();
+        canvasGameObject.AddComponent<CanvasScaler>();
+        canvasGameObject.AddComponent<GraphicRaycaster>();
 
-        imageContainer.transform.SetParent(selectionPanelGameObject.transform);
-        selectionPanelGameObject.transform.position = new Vector2(x, y);
-        selectionPanelGameObject.AddComponent<CanvasRenderer>();
-        canvasRenderer = selectionPanelGameObject.GetComponent<CanvasRenderer>();
-        canvasRenderer.SetColor(Color.black);
+        // Event System object (needed to detect mouse input)
+        EventSystem = new GameObject("Event System Object");
+        EventSystem.AddComponent<EventSystem>();
+        EventSystem.AddComponent<StandaloneInputModule>();
+        EventSystem.AddComponent<BaseInput>();
+        EventSystem.transform.parent = canvasGameObject.transform;
+
+        // second level - Panel obj
+        selectionPanelGameObject = new GameObject("Selection Panel GameObject");
+        selectionPanelGameObject.transform.parent = canvasGameObject.transform;
+        selectionPanelGameObject.AddComponent<Image>();
+        selectionPanelGameObject.GetComponent<Image>().enabled = false;
+
+
+        // third lvl - Scroll area
+        scrollArea = new GameObject("Scroll Area");
+        scrollArea.transform.parent = selectionPanelGameObject.transform;
+        scrollArea.AddComponent<ScrollRect>();//.content = imageContainer.GetComponent<RectTransform>();
+        scrollArea.AddComponent<Image>();
+        scrollArea.GetComponent<Image>().enabled = false;
+        scrollArea.GetComponent<RectTransform>().position = new Vector2(x, y);
+        //scrollArea.GetComponent<RectTransform>().sizeDelta.Set(panelWidth, panelHeight);
+        scrollArea.GetComponent<ScrollRect>().horizontal = false;
+        scrollArea.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 24);
+
+        // fourth lvl - Container
+        imageContainer = new GameObject("Image Container");
+        imageContainer.transform.parent = scrollArea.transform;
+        imageContainer.AddComponent<RectTransform>();
+        scrollArea.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 63);
+        imageContainer.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        imageContainer.AddComponent<VerticalLayoutGroup>();
+        imageContainer.GetComponent<VerticalLayoutGroup>().spacing = 1;
+        imageContainer.GetComponent<VerticalLayoutGroup>().childControlWidth = false;
+        imageContainer.GetComponent<VerticalLayoutGroup>().childControlHeight = false;
+        imageContainer.GetComponent<VerticalLayoutGroup>().childForceExpandWidth = false;
+        imageContainer.GetComponent<VerticalLayoutGroup>().childForceExpandHeight = false;
+        imageContainer.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.MiddleCenter;
+        imageContainer.GetComponent<VerticalLayoutGroup>().padding.left = 2;
+        imageContainer.GetComponent<VerticalLayoutGroup>().padding.top = 9;
+        imageContainer.AddComponent<Image>();
+        imageContainer.GetComponent<Image>().enabled = false;
+        // set scroll stuff
+        scrollArea.GetComponent<ScrollRect>().content = imageContainer.GetComponent<RectTransform>();
 
         // load sprite assets
         spriteArray = Resources.LoadAll<Sprite>("Sprites/");
         spriteGameObjects = new GameObject[spriteArray.Length];
-
-        // create & set rect dimensions
-        parentPanel = selectionPanelGameObject.AddComponent<Canvas>();
-        selectionPanelGameObject.GetComponent<RectTransform>().sizeDelta.Set(panelWidth, panelHeight);
 
         int count = 0;
         //create the image objects and set parent to panel
@@ -58,7 +94,7 @@ public class SpriteSelection
 
             Image NewImage = NewObj.AddComponent<Image>(); //Add the Image Component script
             NewImage.sprite = sprite; //Set the Sprite of the Image Component on the new GameObject
-            NewObj.GetComponent<RectTransform>().SetParent(selectionPanelGameObject.GetComponent<RectTransform>()); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+            //NewObj.GetComponent<RectTransform>().SetParent(selectionPanelGameObject.GetComponent<RectTransform>()); //Assign the newly created Image GameObject as a Child of the Parent Panel.
             NewObj.GetComponent<RectTransform>().sizeDelta = new Vector2(cellSize, cellSize);
             spriteGameObjects[count] = NewObj; // push to array for later use
             count++; // increment

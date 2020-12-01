@@ -42,8 +42,6 @@ public class MyTileMap
     // Update is called once per frame
     public void Update()
     {
-        
-
         if (Input.GetMouseButtonDown(0))
         {
             Sprite check = spriteSelection.checkMouseClickOnSpriteSelection(Camera.main.ScreenToWorldPoint(Input.mousePosition));
