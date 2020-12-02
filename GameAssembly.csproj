@@ -65,8 +65,10 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\MyGrid.cs" />
     <Compile Include="Assets\Scripts\MyTileMap.cs" />
+    <Compile Include="Assets\Scripts\MyTileMapEditor.cs" />
     <Compile Include="Assets\Scripts\SpriteSelection.cs" />
-    <Compile Include="Assets\Scripts\Testing.cs" />
+    <Compile Include="Assets\Scripts\TestTileMap.cs" />
+    <Compile Include="Assets\Scripts\TestingTileMapEditor.cs" />
     <Compile Include="Assets\Scripts\TileMapObject.cs" />
     <None Include="Assets\Scripts\GameAssembly.asmdef" />
     <Reference Include="UnityEngine">
