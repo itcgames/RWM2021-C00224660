@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class TileMapObject :  MonoBehaviour
 {
-    public GameObject tileGameObject;
+    //public GameObject tileGameObject;
     public Canvas canvas;
     private float m_x;
     private float m_y;
@@ -15,12 +15,21 @@ public class TileMapObject :  MonoBehaviour
     Image tileImage;
     public TileMapObject(int t_x, int t_y, float cellSize)
     {
-        tileGameObject = new GameObject("TileGameObject");
+        //tileGameObject = new GameObject("TileGameObject");
         this.cellSize = cellSize;
-        canvasRenderer = tileGameObject.AddComponent<CanvasRenderer>();
-        tileImage = tileGameObject.AddComponent<Image>(); //Add the Image Component script
-        canvas = tileGameObject.AddComponent<Canvas>();
-        tileGameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(cellSize, cellSize);
+        canvasRenderer = this.gameObject.AddComponent<CanvasRenderer>();
+        tileImage = this.gameObject.AddComponent<Image>(); //Add the Image Component script
+        canvas = this.gameObject.AddComponent<Canvas>();
+        this.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(cellSize, cellSize);
+        canvasRenderer.SetColor(new Color(1f, 1f, 1f, 0f));// is about 100 % transparent(Cant be seen at all, but still active)
+    }
+    public void init(float cellSize)
+    {
+        this.cellSize = cellSize;
+        canvasRenderer = this.gameObject.AddComponent<CanvasRenderer>();
+        tileImage = this.gameObject.AddComponent<Image>(); //Add the Image Component script
+        canvas = this.gameObject.AddComponent<Canvas>();
+        this.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(cellSize, cellSize);
         canvasRenderer.SetColor(new Color(1f, 1f, 1f, 0f));// is about 100 % transparent(Cant be seen at all, but still active)
     }
 
@@ -30,10 +39,10 @@ public class TileMapObject :  MonoBehaviour
         canvasRenderer.SetColor(new Color(1f, 1f, 1f, 1f)); //is a normal sprite
     }
 
-    public void SetXY(int x, int y)
+    public void SetXY(float x, float y)
     {
         m_x = x;
         m_y = y;
-        tileGameObject.transform.localPosition = new Vector3(m_x + (cellSize / 2), m_y + (cellSize / 2));
+        this.gameObject.transform.localPosition = new Vector3(m_x + (cellSize / 2), m_y + (cellSize / 2));
     }
 }

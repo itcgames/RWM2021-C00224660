@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +22,34 @@ public class MyGrid<TGridObject>
 
         gridArray = new TGridObject[width, height];
         //textArray = new TextMesh[width, height];
-        
+
+        // Draw grid lines
+        //for (int x = 0; x < gridArray.GetLength(0); x++)
+        //{
+        //    for (int y = 0; y < gridArray.GetLength(1); y++)
+        //    {
+        //        Debug.DrawLine(GetWorldPosition(x + (int)(originPosition.x), y + (int)(originPosition.y)), GetWorldPosition(x + (int)(originPosition.x), y + 1 + (int)(originPosition.y)), Color.white, 100f);
+        //        Debug.DrawLine(GetWorldPosition(x + (int)(originPosition.x), y + (int)(originPosition.y)), GetWorldPosition(x + 1 + (int)(originPosition.x), y + (int)(originPosition.y)), Color.white, 100f);
+        //    }
+        //}
+        //Debug.DrawLine(GetWorldPosition(0 + (int)(originPosition.x), height + (int)(originPosition.y)), GetWorldPosition(width + (int)(originPosition.x), height + (int)(originPosition.y)), Color.white, 100f);
+        //Debug.DrawLine(GetWorldPosition(width + (int)(originPosition.x), 0 + (int)(originPosition.y)), GetWorldPosition(width + (int)(originPosition.x), height + (int)(originPosition.y)), Color.white, 100f);
+    }
+
+    public MyGrid()
+    {
+    }
+
+    public void init(int width, int height, float cellSize, Vector3 originPosition)
+    {
+        this.width = width;
+        this.height = height;
+        this.cellSize = cellSize;
+        this.originPosition = originPosition;
+
+        gridArray = new TGridObject[width, height];
+        //textArray = new TextMesh[width, height];
+
         // Draw grid lines
         for (int x = 0; x < gridArray.GetLength(0); x++)
         {
@@ -92,7 +120,7 @@ public class MyGrid<TGridObject>
 
     public TGridObject getValueAtPos(Vector3 worldPosition)
     {
-        return gridArray[(int)(worldPosition.x), (int)(worldPosition.y)];
+        return gridArray[(int)(worldPosition.x - originPosition.x), (int)(worldPosition.y - originPosition.y)];
     }
 
 
@@ -107,5 +135,10 @@ public class MyGrid<TGridObject>
     {
 
     }
+
+    //public static implicit operator MyGrid<TGridObject>(MyGrid<GameObject> v)
+    //{
+    //    throw new NotImplementedException();
+    //}
 }
 
