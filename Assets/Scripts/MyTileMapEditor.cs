@@ -72,6 +72,7 @@ public class MyTileMapEditor : MonoBehaviour
                     if (tileMapObject == grid.gridArray[x, y])
                     {
                        staticVarAccsessorTileMap.setMapSpriteIndex(x,y, currentSpriteIndex);
+                        staticVarAccsessorTileMap.useCustomMap();
                     }
                 }
             }

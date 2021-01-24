@@ -64,13 +64,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\ChangeScene.cs" />
     <Compile Include="Assets\Scripts\MyGrid.cs" />
     <Compile Include="Assets\Scripts\MyTileMap.cs" />
     <Compile Include="Assets\Scripts\MyTileMapEditor.cs" />
     <Compile Include="Assets\Scripts\SpriteSelection.cs" />
     <Compile Include="Assets\Scripts\TestTileMap.cs" />
-    <Compile Include="Assets\Scripts\TestingTileMapEditor.cs" />
     <Compile Include="Assets\Scripts\TileMapObject.cs" />
+    <Compile Include="Assets\Scripts\setUpTileMapEditor.cs" />
     <None Include="Assets\Scripts\GameAssembly.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

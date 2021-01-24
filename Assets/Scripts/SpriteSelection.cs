@@ -8,17 +8,17 @@ using UnityEngine.EventSystems;
 public class SpriteSelection : MonoBehaviour
 {
 
-    public GameObject canvasGameObject;
-    public GameObject selectionPanelGameObject;  // main obj
-    public GameObject scrollArea;
-    public GameObject EventSystem;
+    private GameObject canvasGameObject;
+    private GameObject selectionPanelGameObject;  // main obj
+    private GameObject scrollArea;
+    private GameObject EventSystem;
 
-    public GameObject[] spriteGameObjects;
+    private GameObject[] spriteGameObjects;
     public Sprite[] spriteArray;
-    public Image parentPanel;
+    private Image parentPanel;
     
     private CanvasRenderer canvasRenderer;
-    public GameObject imageContainer;
+    private GameObject imageContainer;
 
     private MyTileMapEditor mapEditorStaticVarAccessor = new MyTileMapEditor();
     public SpriteSelection()

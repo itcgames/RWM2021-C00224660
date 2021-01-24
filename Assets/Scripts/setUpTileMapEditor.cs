@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Author: Josh Browne
-public class TestingTileMapEditor : MonoBehaviour
+public class setUpTileMapEditor : MonoBehaviour
 {
     private MyTileMapEditor tileMapEditor;
     private int gridWidth;
@@ -14,8 +14,8 @@ public class TestingTileMapEditor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gridWidth = 10;
-        gridHeight = 5;
+        gridWidth = 15;
+        gridHeight = 8;
         cellSize = 1f;
         mapOriginPosition = new Vector3(0, 0, 0);  // set origin
         float textureSelectPanelOffset = 1;

@@ -50,17 +50,39 @@ public class MyGrid<TGridObject>
         gridArray = new TGridObject[width, height];
         //textArray = new TextMesh[width, height];
 
+
+        // For grid lines
+        
+        LineRenderer lineRenderer = GameObject.Find("CreateMapEditorGameObject").AddComponent<LineRenderer>();
+        lineRenderer.enabled = true;
+        lineRenderer.positionCount = 586;
+        lineRenderer.SetWidth(0.05f, 0.05f);
+        lineRenderer.material.color = Color.white;
+        lineRenderer.startColor = Color.grey;
+        lineRenderer.endColor = Color.grey;
         // Draw grid lines
+        int count = 0;
         for (int x = 0; x < gridArray.GetLength(0); x++)
         {
             for (int y = 0; y < gridArray.GetLength(1); y++)
             {
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
+                //line stuff..
+                lineRenderer.SetPosition(count, GetWorldPosition(x, y));
+                count++;
+                lineRenderer.SetPosition(count, GetWorldPosition(x, y + 1));
+                count++;
+                lineRenderer.SetPosition(count, GetWorldPosition(x + 1, y + 1));
+                count++;
+                lineRenderer.SetPosition(count, GetWorldPosition(x + 1, y));
+                count++;
+                if (y < height - 1 || x == width - 1)
+                {
+                    lineRenderer.SetPosition(count, GetWorldPosition(x, y));
+                    count++;
+                }
             }
         }
-        Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
-        Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
+        lineRenderer.SetPosition(lineRenderer.positionCount-1, lineRenderer.GetPosition(count - 2));
     }
 
     // Create Text in World
